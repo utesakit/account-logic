@@ -14,3 +14,4 @@ object UsersTable : Table<Nothing>("users") {
     val email = varchar("email")
     val passwordHash = varchar("password_hash")
 }
+

@@ -87,3 +87,4 @@ class EmailAlreadyExistsException(message: String) : Exception(message)
  * Thrown when authentication of a user fails.
  */
 class AuthenticationException(message: String) : Exception(message)
+

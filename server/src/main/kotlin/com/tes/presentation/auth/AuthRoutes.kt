@@ -143,3 +143,4 @@ fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
         }
     }
 }
+

@@ -83,3 +83,4 @@ fun User.toResponse(): UserResponse =
         lastName = this.lastName,
         email = this.email
     )
+
