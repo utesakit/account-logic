@@ -34,15 +34,12 @@ fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
             // Check that the email address is not already in use.
             authService.checkEmailAvailability(request.email)
 
-            // Hash the plain-text password before storing it
-            val passwordHash = authService.hashPassword(request.password)
-
             // Create the user record in the database
             val user = userRepository.createUser(
                 firstName = request.firstName,
                 lastName = request.lastName,
                 email = request.email,
-                passwordHash = passwordHash
+                password = password
             )
 
             // Respond with 201 Created and return the user info as JSON

@@ -2,7 +2,6 @@ package com.tes.domain.auth
 
 import com.tes.domain.user.UserRepository
 import com.tes.domain.user.User
-import org.mindrot.jbcrypt.BCrypt
 
 /**
  * Provides authentication-related business logic for the application.
@@ -50,19 +49,11 @@ class AuthService(
         val user = userRepository.findByEmail(email)
             ?: throw AuthenticationException("Email or password is incorrect.")
 
-        // Verify password using BCrypt (compares plaintext against the stored hash).
-        if (!BCrypt.checkpw(password, user.passwordHash)) {
+        // Verify password
+        if (password != user.password) {
             throw AuthenticationException("Email or password is incorrect.")
         }
-
         return user
-    }
-
-    /**
-     * Hashes a plaintext password using BCrypt.
-     */
-    fun hashPassword(password: String): String {
-        return BCrypt.hashpw(password, BCrypt.gensalt())
     }
 
     /**

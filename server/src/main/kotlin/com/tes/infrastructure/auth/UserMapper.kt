@@ -17,7 +17,7 @@ object UserMapper {
             firstName = row[UsersTable.firstName]!!,
             lastName = row[UsersTable.lastName]!!,
             email = row[UsersTable.email]!!,
-            passwordHash = row[UsersTable.passwordHash]!!
+            password = row[UsersTable.password]!!
         )
     }
 }

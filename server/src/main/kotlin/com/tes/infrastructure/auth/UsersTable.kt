@@ -12,6 +12,6 @@ object UsersTable : Table<Nothing>("users") {
     val firstName = varchar("first_name")
     val lastName = varchar("last_name")
     val email = varchar("email")
-    val passwordHash = varchar("password_hash")
+    val password = varchar("password")
 }
 

@@ -24,14 +24,14 @@ class DbUserRepository(
         firstName: String,
         lastName: String,
         email: String,
-        passwordHash: String
+        password: String
     ): User {
         // Insert a new row into the "users" table.
         database.insert(UsersTable) {
             set(UsersTable.firstName, firstName)
             set(UsersTable.lastName, lastName)
             set(UsersTable.email, email)
-            set(UsersTable.passwordHash, passwordHash)
+            set(UsersTable.password, password)
         }
 
         // Load the inserted user by email so we can return it with its generated ID.
