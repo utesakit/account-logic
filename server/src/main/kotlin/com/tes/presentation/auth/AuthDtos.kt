@@ -51,26 +51,7 @@ data class MessageResponse(
  */
 @Serializable
 data class AuthResponse(
-    val accessToken: String,
-    val refreshToken: String,
     val user: UserResponse
-)
-
-/**
- * Request body for refreshing an access token.
- */
-@Serializable
-data class RefreshTokenRequest(
-    val refreshToken: String
-)
-
-/**
- * API response returned after successful token refresh.
- */
-@Serializable
-data class RefreshTokenResponse(
-    val accessToken: String,
-    val refreshToken: String
 )
 
 /**

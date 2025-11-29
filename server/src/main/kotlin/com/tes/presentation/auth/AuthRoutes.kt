@@ -20,7 +20,7 @@ import io.ktor.server.routing.post
  */
 fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
 
-    // POST /auth/register: register a new user and issue initial tokens
+    // POST /auth/register: register a new user
     post<RegisterRequest>("/auth/register") { request ->
         try {
             // Check basic registration data (names, email, password)
@@ -45,15 +45,10 @@ fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
                 passwordHash = passwordHash
             )
 
-            // Issue access + refresh token for the new user
-            val (accessToken, refreshToken) = authService.generateTokens(user)
-
-            // Respond with 201 Created and return tokens and user info as JSON
+            // Respond with 201 Created and return the user info as JSON
             call.respond(
                 HttpStatusCode.Created,
                 AuthResponse(
-                    accessToken = accessToken,
-                    refreshToken = refreshToken,
                     user = user.toResponse()
                 )
             )
@@ -79,21 +74,16 @@ fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
         }
     }
 
-    // POST /auth/login: log in with email and password and issue tokens
+    // POST /auth/login: log in with email and password
     post<LoginRequest>("/auth/login") { request ->
         try {
             //  Authenticate user using email and password
             val user = authService.authenticate(request.email, request.password)
 
-            // Issue a fresh access + refresh token pair
-            val (accessToken, refreshToken) = authService.generateTokens(user)
-
-            // Respond with 200 OK and return tokens and user info as JSON
+            // Respond with 200 OK and return the user info as JSON
             call.respond(
                 HttpStatusCode.OK,
                 AuthResponse(
-                    accessToken = accessToken,
-                    refreshToken = refreshToken,
                     user = user.toResponse()
                 )
             )
@@ -109,36 +99,6 @@ fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
             call.respond(
                 HttpStatusCode.InternalServerError,
                 MessageResponse("Internal server error during login.")
-            )
-        }
-    }
-
-    // POST /auth/refresh: exchange a refresh token for a new token pair
-    post<RefreshTokenRequest>("/auth/refresh") { request ->
-        try {
-            // Validate and exchange refresh token for a new token pair
-            val (accessToken, refreshToken) = authService.refreshTokens(request.refreshToken)
-
-            // Respond with 200 OK and return the new access + refresh token
-            call.respond(
-                HttpStatusCode.OK,
-                RefreshTokenResponse(
-                    accessToken = accessToken,
-                    refreshToken = refreshToken
-                )
-            )
-        } catch (e: AuthenticationException) {
-            // Refresh token is invalid, expired or revoked -> 401
-            call.respond(
-                HttpStatusCode.Unauthorized,
-                MessageResponse(e.message ?: "Token refresh failed.")
-            )
-        } catch (e: Exception) {
-            // Any unexpected error on the server side -> 500
-            e.printStackTrace()
-            call.respond(
-                HttpStatusCode.InternalServerError,
-                MessageResponse("Internal server error during token refresh.")
             )
         }
     }
