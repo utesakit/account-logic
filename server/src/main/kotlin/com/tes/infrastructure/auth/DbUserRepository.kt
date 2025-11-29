@@ -12,17 +12,6 @@ import org.ktorm.dsl.where
 
 /**
  * PostgreSQL / Ktorm implementation of [UserRepository].
- *
- * This class belongs to the data layer and is responsible for reading and writing user data in the "users" table.
- *
- * Responsibilities:
- * - Create new users in the database.
- * - Look up users by email or by ID.
- *
- * All higher-level validation rules and password handling are implemented in [com.tes.domain.auth.AuthService].
- * This repository focuses only on database access.
- *
- * @param database Shared Ktorm [Database] instance used to run SQL queries.
  */
 class DbUserRepository(
     private val database: Database
@@ -30,18 +19,6 @@ class DbUserRepository(
 
     /**
      * Inserts a new user into the "users" table and returns the created domain object.
-     *
-     * Steps:
-     * - Insert the new user row (first name, last name, email, password hash).
-     * - Load the user again by email to retrieve the generated database ID.
-     *
-     * @param firstName First name of the new user.
-     * @param lastName Last name of the new user.
-     * @param email Email address of the new user.
-     * @param passwordHash Hashed password to be stored.
-     * @return The persisted [User], including its generated database ID.
-     *
-     * @throws IllegalStateException If the user cannot be loaded again after insertion.
      */
     override fun createUser(
         firstName: String,
@@ -68,10 +45,7 @@ class DbUserRepository(
     }
 
     /**
-     * Retrieves a user by their email address, if one exists.
-     *
-     * @param email Email address to search for.
-     * @return The matching [User] or "null" if no user with this email exists.
+     * Retrieves a user by their email address if one exists.
      */
     override fun findByEmail(email: String): User? {
         return database
@@ -83,10 +57,7 @@ class DbUserRepository(
     }
 
     /**
-     * Retrieves a user by their unique ID, if one exists.
-     *
-     * @param id User ID to search for.
-     * @return The matching [User] or "null" if no user with this ID exists.
+     * Retrieves a user by their unique ID if one exists.
      */
     override fun findById(id: Int): User? {
         return database

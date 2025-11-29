@@ -13,23 +13,10 @@ import io.ktor.server.routing.post
 
 /**
  * Defines all HTTP routes related to authentication and authorization.
- *
- * Endpoints:
- * - POST /auth/register: Registers a new user account.
- * - POST /auth/login: Authenticates a user and issues JWT tokens.
- * - POST /auth/refresh: Issues new tokens based on a refresh token.
- *
- * This layer:
- * - Parses incoming JSON requests into DTOs.
- * - Calls the [AuthService] to execute business logic.
- * - Translates domain exceptions into meaningful HTTP status codes and messages.
  */
 
 /**
  * Registers all authentication routes inside the given [Route] tree.
- *
- * @param authService Business logic for authentication and token handling.
- * @param userRepository Access to user data for registration and lookup.
  */
 fun Route.authRoutes(authService: AuthService, userRepository: UserRepository) {
 

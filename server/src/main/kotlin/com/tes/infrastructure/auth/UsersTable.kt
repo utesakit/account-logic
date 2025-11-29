@@ -6,9 +6,6 @@ import org.ktorm.schema.varchar
 
 /**
  * Ktorm table definition for the "users" table.
- *
- * Each row in this table stores the basic account information for a single user.
- * This mapping is used by the data layer to build type-safe SQL queries.
  */
 object UsersTable : Table<Nothing>("users") {
     val id = int("id").primaryKey()
