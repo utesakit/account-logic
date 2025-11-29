@@ -9,3 +9,6 @@ Implement logic in:
 - `com.tes.presentation.auth.AuthDtos`
 - `com.tes.presentation.auth.AuthRoutes`
 - `com.tes.domain.auth.AuthService`
+- `com.tes.infrastructure.auth.DbUserRepository`
+- `com.tes.infrastructure.auth.UserMapper`
+- `com.tes.infrastructure.auth.UsersTable`
